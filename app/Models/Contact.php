@@ -26,4 +26,9 @@ class Contact extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function memories()
+    {
+        return $this->hasMany(Memory::class);
+    }
 }
