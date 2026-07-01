@@ -24,6 +24,7 @@ class StoreMemoryRequest extends FormRequest
     {
         return [
             'contactId' => ['required', 'integer'],
+            'contact_id' => ['required', 'integer'],
             'content' => ['required'],
         ];
     }
