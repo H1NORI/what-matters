@@ -19,4 +19,9 @@ class Memory extends Model
     {
         return $this->belongsTo(Contact::class, 'contact_id');
     }
+
+    public function facts()
+    {
+        return $this->hasMany(Fact::class);
+    }
 }

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Contact;
+use App\Models\Memory;
+use Database\Factories\MemoryFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +17,11 @@ class ContactSeeder extends Seeder
     {
         Contact::factory()
             ->count(25)
-            ->hasMemories(4)
+            ->has(
+                Memory::factory()
+                    ->count(4)
+                    ->hasFacts(3)
+            )
             ->create();
     }
 }

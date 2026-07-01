@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\FactController;
 use App\Http\Controllers\Api\V1\MemoryController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -15,4 +15,6 @@ Route::prefix('v1')->group(function() {
     Route::apiResource('contacts', ContactController::class);
 
     Route::apiResource('memories', MemoryController::class);
+
+    Route::apiResource('facts', FactController::class);
 });
