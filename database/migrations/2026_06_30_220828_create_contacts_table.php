@@ -22,7 +22,8 @@ return new class extends Migration
                 ->nullOnDelete();
 
             $table->string('name');
-            $table->date('birthdate');
+            $table->date('birthdate')
+                ->nullable();
             $table->timestamps();
         });
     }
