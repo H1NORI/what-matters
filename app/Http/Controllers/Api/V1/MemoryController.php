@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Memory;
 use App\Filters\V1\MemoriesFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMemoryRequest;
-use App\Http\Requests\UpdateMemoryRequest;
+use App\Http\Requests\V1\StoreMemoryRequest;
+use App\Http\Requests\V1\UpdateMemoryRequest;
 use App\Http\Resources\V1\MemoryCollection;
 use App\Http\Resources\V1\MemoryResource;
-use App\Models\Memory;
 use Illuminate\Http\Request;
 
 class MemoryController extends Controller
@@ -31,7 +31,7 @@ class MemoryController extends Controller
      */
     public function store(StoreMemoryRequest $request)
     {
-        //
+        return new MemoryResource(Memory::create($request->all()));
     }
 
     /**
@@ -47,7 +47,7 @@ class MemoryController extends Controller
      */
     public function update(UpdateMemoryRequest $request, Memory $memory)
     {
-        //
+        $memory->update($request->all());
     }
 
     /**

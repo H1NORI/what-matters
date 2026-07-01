@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMemoryRequest extends FormRequest
+class StoreContactRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,18 @@ class UpdateMemoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'ownerId' => ['required', 'integer'],            
+            'userId' => ['integer', 'nullable'],            
+            'name' => ['required'],
+            'birthdate' => ['date_format:Y-m-d', 'nullable'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'owner_id' => $this->ownerId,
+            'user_id' => $this->userId,
+        ]);
     }
 }

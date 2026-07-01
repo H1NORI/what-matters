@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\ContactsFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreContactRequest;
-use App\Http\Requests\UpdateContactRequest;
+use App\Http\Requests\V1\StoreContactRequest;
+use App\Http\Requests\V1\UpdateContactRequest;
 use App\Http\Resources\V1\ContactCollection;
 use App\Http\Resources\V1\ContactResource;
 use App\Models\Contact;
@@ -37,7 +37,7 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
-        //
+        return new ContactResource(Contact::create($request->all()));
     }
 
     /**
@@ -59,7 +59,7 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
-        //
+        $contact->update($request->all());
     }
 
     /**
