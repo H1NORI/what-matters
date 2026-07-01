@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\ContactsFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use App\Http\Resources\V1\ContactCollection;
+use App\Http\Resources\V1\ContactResource;
 use App\Models\Contact;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $filter = new ContactsFilter();
+        $queryItems = $filter->transform($request);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $includeMemories = $request->query('includeMemories');
+
+        $customers = Contact::where($queryItems);
+
+        if ($includeMemories) {
+            $customers = $customers->with('memories');
+        }
+
+        return new ContactCollection($customers->paginate()->appends($request->query()));
     }
 
     /**
@@ -38,15 +45,13 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
-    }
+        $includeMemories = request()->query('includeMemories');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contact $contact)
-    {
-        //
+        if ($includeMemories) {
+            return new ContactResource($contact->loadMissing('memories'));
+        }
+
+        return new ContactResource($contact);
     }
 
     /**

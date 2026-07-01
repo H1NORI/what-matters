@@ -14,7 +14,18 @@ class MemoryController extends Controller
      */
     public function index()
     {
-        //
+        // $filter = new ContactsFilter();
+        // $queryItems = $filter->transform($request);
+
+        // // $includeMemories = $request->query('includeMemories');
+
+        // $customers = Contact::where($queryItems);
+
+        // // if ($includeMemories) {
+        // //     $customers = $customers->with('memories');
+        // // }
+
+        // return new ContactCollection($customers->paginate()->appends($request->query()));
     }
 
     /**
