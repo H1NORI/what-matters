@@ -3,7 +3,7 @@ namespace App\Filters\V1;
 
 use App\Filters\ApiFilter;
 
-class ContactsFilter extends ApiFilter
+class MemoriesFilter extends ApiFilter
 {
     protected $safeParams = [
         'contactId' => ['eq'],

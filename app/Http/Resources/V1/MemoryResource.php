@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MemoriesResource extends JsonResource
+class MemoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

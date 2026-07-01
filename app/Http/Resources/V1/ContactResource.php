@@ -20,7 +20,7 @@ class ContactResource extends JsonResource
             'userId' => $this->user_id,
             'name' => $this->name,
             'birthdate' => $this->birthdate,
-            'memories' => MemoriesResource::collection($this->whenLoaded('memories')),
+            'memories' => MemoryResource::collection($this->whenLoaded('memories')),
         ];
     }
 }

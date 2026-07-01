@@ -2,38 +2,28 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\MemoriesFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMemoryRequest;
 use App\Http\Requests\UpdateMemoryRequest;
+use App\Http\Resources\V1\MemoryCollection;
+use App\Http\Resources\V1\MemoryResource;
 use App\Models\Memory;
+use Illuminate\Http\Request;
 
 class MemoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $filter = new ContactsFilter();
-        // $queryItems = $filter->transform($request);
+        $filter = new MemoriesFilter();
+        $queryItems = $filter->transform($request);
 
-        // // $includeMemories = $request->query('includeMemories');
+        $customers = Memory::where($queryItems);
 
-        // $customers = Contact::where($queryItems);
-
-        // // if ($includeMemories) {
-        // //     $customers = $customers->with('memories');
-        // // }
-
-        // return new ContactCollection($customers->paginate()->appends($request->query()));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new MemoryCollection($customers->paginate()->appends($request->query()));
     }
 
     /**
@@ -49,15 +39,7 @@ class MemoryController extends Controller
      */
     public function show(Memory $memory)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Memory $memory)
-    {
-        //
+        return new MemoryResource($memory);
     }
 
     /**
