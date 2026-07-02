@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Ai\Agents\MemoryAnalysisAgent;
 use App\Models\Memory;
 use App\Filters\V1\MemoriesFilter;
 use App\Http\Controllers\Controller;
@@ -10,7 +9,7 @@ use App\Http\Requests\V1\StoreMemoryRequest;
 use App\Http\Requests\V1\UpdateMemoryRequest;
 use App\Http\Resources\V1\MemoryCollection;
 use App\Http\Resources\V1\MemoryResource;
-use App\Models\Fact;
+use App\Services\MemoryAnalysisService;
 use Illuminate\Http\Request;
 
 class MemoryController extends Controller
@@ -35,29 +34,8 @@ class MemoryController extends Controller
     {
         $memory = Memory::create($request->validated());
 
-        // TODO move this code to specific class
         if($memory->id) {
-            (new MemoryAnalysisAgent)
-                ->queue($memory->content)
-                ->then(function ($response) use ($memory) {
-                    if (isset($response['facts'])) {
-                        foreach ($response['facts'] as $fact) {
-    
-                            Fact::create([
-                                'memory_id' => $memory->id,
-                                'type' => $fact['type'],
-                                'attribute' => $fact['attribute'],
-                                'value' => $fact['value'],
-                            ]);
-                        }
-                    }
-                })
-                ->catch(function ($e) {
-                    logger()->error('AI failed', [
-                        // 'memory_id' => $memory->id,
-                        'error' => $e->getMessage(),
-                    ]);
-                });
+            MemoryAnalysisService::analyzeAsync($memory);
         }
 
         return new MemoryResource($memory);
