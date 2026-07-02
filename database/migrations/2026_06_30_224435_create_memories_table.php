@@ -18,8 +18,11 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->text('content');
-            // $table->enum('status', ['']);
-
+            $table->enum('status', [
+                'pending',
+                'analyzed',
+                'failed',
+            ])->default('pending');
             $table->timestamps();
         });
     }

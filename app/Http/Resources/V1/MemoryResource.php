@@ -18,6 +18,7 @@ class MemoryResource extends JsonResource
             'id' => $this->id,
             'contactId' => $this->contact_id,
             'content' => $this->content,
+            'status' => $this->status,
         ];
     }
 }

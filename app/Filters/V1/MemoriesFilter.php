@@ -8,6 +8,7 @@ class MemoriesFilter extends ApiFilter
     protected $safeParams = [
         'contactId' => ['eq'],
         'content' => ['eq'],
+        'status' => ['eq'],
     ];
 
     protected $columnMap = [

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\MemoryStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,11 @@ class Memory extends Model
     protected $fillable = [
         'contact_id',
         'content',
+        'status',
+    ];
+
+    protected $attributes = [
+        'status' => MemoryStatus::Pending->value,
     ];
 
     public function contact()
@@ -23,5 +29,12 @@ class Memory extends Model
     public function facts()
     {
         return $this->hasMany(Fact::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'status' => MemoryStatus::class,
+        ];
     }
 }
